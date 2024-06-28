@@ -1,12 +1,30 @@
-package com.example.domain;
+package com.example.cursomc_uml.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.annotations.ManyToAny;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Categoria implements Serializable{
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
+    @ManyToAny
+    private List<Produto> produtos = new ArrayList<>();
+
+    public Categoria(){
+    }
 
     public Categoria(Integer id, String nome) {
         super();
@@ -31,6 +49,14 @@ public class Categoria implements Serializable{
         this.nome = nome;
     }
 
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    } 
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -54,6 +80,6 @@ public class Categoria implements Serializable{
         } else if (!id.equals(other.id))
             return false;
         return true;
-    } 
+    }
     
 }
